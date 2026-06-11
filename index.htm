@@ -540,18 +540,30 @@
     'PSX_20260318_171505.jpg','PSX_20260522_154322.jpg'
   ];
 
-  // Replace placeholders with actual img tags when image loads
+  // Replace placeholders with actual img tags when image loads; hide item if image missing
   document.querySelectorAll('.grid-item').forEach((item, i) => {
-    if (i >= photos.length) return;
+    if (i >= photos.length) { item.style.display = 'none'; return; }
     const img = new Image();
     img.src = photos[i];
     img.alt = 'Gayatri Kharode';
     img.onload = () => {
       item.querySelector('.grid-placeholder').replaceWith(img);
     };
+    img.onerror = () => {
+      item.style.display = 'none';
+    };
   });
+
+  // About page image — hide container if photo missing
+  const aboutImg = document.querySelector('.about-img img');
+  if (aboutImg) {
+    aboutImg.onerror = () => {
+      aboutImg.closest('.about-img-wrap').style.display = 'none';
+    };
+  }
 
 
 </script>
 </body>
 </html>
+
